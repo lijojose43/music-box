@@ -7,7 +7,6 @@ const COLORS = [
 let tiles = [];
 let currentAudio = null;
 let currentTileId = null;
-let audioCtx = null;
 let dragSrcId = null;
 
 const grid = document.getElementById('tileGrid');
@@ -63,7 +62,13 @@ function renderTiles() {
       div.classList.add('playing');
     }
 
-    div.addEventListener('click', () => playTile(tile));
+    div.addEventListener('click', e => {
+      if (div.dataset.touchTapped === 'true') {
+        div.dataset.touchTapped = 'false';
+        return;
+      }
+      playTile(tile);
+    });
 
     div.addEventListener('dragstart', e => {
       dragSrcId = tile.id;
@@ -108,16 +113,23 @@ function renderTiles() {
       }
     }, { passive: false });
     div.addEventListener('touchend', e => {
-      if (!dragging) return;
-      const t = e.changedTouches[0];
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      grid.querySelectorAll('.tile').forEach(t => t.classList.remove('drag-over'));
-      if (el && el.classList.contains('tile') && el.dataset.id !== dragSrcId && dragSrcId) {
-        const targetId = el.dataset.id;
-        reorderTiles(dragSrcId, targetId);
+      if (dragging) {
+        e.preventDefault();
+        const t = e.changedTouches[0];
+        const el = document.elementFromPoint(t.clientX, t.clientY);
+        grid.querySelectorAll('.tile').forEach(t => t.classList.remove('drag-over'));
+        if (el && el.classList.contains('tile') && el.dataset.id !== dragSrcId && dragSrcId) {
+          const targetId = el.dataset.id;
+          reorderTiles(dragSrcId, targetId);
+        }
+        dragSrcId = null;
+        dragging = false;
+        return;
       }
+      e.preventDefault();
+      div.dataset.touchTapped = 'true';
+      playTile(tile);
       dragSrcId = null;
-      dragging = false;
     });
 
     grid.appendChild(div);
@@ -137,10 +149,6 @@ function reorderTiles(fromId, toId) {
 
 function playTile(tile) {
   stopCurrent();
-
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
 
   const blob = tile.fileData;
   if (!blob) return;
@@ -206,12 +214,6 @@ function togglePlay() {
   }
 }
 
-async function initAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-}
-
 playBtn.addEventListener('click', togglePlay);
 stopBtn.addEventListener('click', stopCurrent);
 
@@ -231,8 +233,6 @@ async function loadTiles() {
 }
 
 loadTiles();
-
-document.addEventListener('click', () => initAudioCtx(), { once: true });
 
 if (navigator.storage && navigator.storage.persist) {
   navigator.storage.persist();
