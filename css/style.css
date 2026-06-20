@@ -253,6 +253,7 @@ main {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
   flex-shrink: 0;
 }
 
