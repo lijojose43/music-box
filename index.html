@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MusicBox">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Music Box</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Music Box</h1>
+    <button id="settingsBtn" aria-label="Settings">⚙</button>
+  </header>
+
+  <main>
+    <div id="tileGrid" class="tile-grid">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🎵</div>
+        <p>No music yet.<br>Open settings to add songs.</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="nowBar" class="now-bar hidden">
+    <div class="now-info">
+      <span class="now-label" id="nowLabel"></span>
+      <div class="now-controls">
+        <button id="playBtn" aria-label="Play/Pause">▶</button>
+        <button id="stopBtn" aria-label="Stop">■</button>
+      </div>
+    </div>
+    <progress id="nowProgress" class="now-progress" value="0" max="100"></progress>
+  </div>
+
+  <div id="settingsOverlay" class="settings-overlay hidden">
+    <div class="settings-panel">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button id="settingsClose" aria-label="Close settings">✕</button>
+      </div>
+      <div class="settings-body">
+        <div id="settingsList" class="settings-list"></div>
+      </div>
+      <div class="settings-footer">
+        <button id="addTileBtn" class="btn btn-primary">+ Add Tile</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modalTitle">Add Tile</h3>
+      <div class="form-group">
+        <label for="modalLabel">Label</label>
+        <input type="text" id="modalLabel" placeholder="Song name...">
+      </div>
+      <div class="form-group">
+        <label for="modalFile">Audio File</label>
+        <input type="file" id="modalFile" accept="audio/*">
+      </div>
+      <div class="modal-actions">
+        <button id="modalCancel" class="btn">Cancel</button>
+        <button id="modalSave" class="btn btn-primary" style="flex:2">Save</button>
+      </div>
+      <button id="modalDelete" class="btn btn-danger hidden" style="width:100%;margin-top:10px">Delete Tile</button>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
