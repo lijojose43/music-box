@@ -1,4 +1,5 @@
 const CACHE = 'music-box-v1';
+const base = self.location.href.slice(0, self.location.href.lastIndexOf('/'));
 
 const assets = [
   '/',
@@ -10,7 +11,7 @@ const assets = [
   '/manifest.json',
   '/icons/icon-192.svg',
   '/icons/icon-512.svg'
-];
+].map(p => base + p);
 
 self.addEventListener('install', e => {
   e.waitUntil(
