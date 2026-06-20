@@ -29,14 +29,16 @@
   </main>
 
   <div id="nowBar" class="now-bar hidden">
+    <div class="now-track">
+      <progress id="nowProgress" class="now-progress" value="0" max="100"></progress>
+    </div>
     <div class="now-info">
       <span class="now-label" id="nowLabel"></span>
       <div class="now-controls">
-        <button id="playBtn" aria-label="Play/Pause">▶</button>
-        <button id="stopBtn" aria-label="Stop">■</button>
+        <button id="playBtn" class="ctrl-btn ctrl-play" aria-label="Play/Pause">▶</button>
+        <button id="stopBtn" class="ctrl-btn ctrl-stop" aria-label="Stop">■</button>
       </div>
     </div>
-    <progress id="nowProgress" class="now-progress" value="0" max="100"></progress>
   </div>
 
   <div id="settingsOverlay" class="settings-overlay hidden">

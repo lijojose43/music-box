@@ -152,7 +152,8 @@ main {
   left: 0;
   right: 0;
   background: var(--surface);
-  padding: 10px 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 0 16px 20px;
   padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
   z-index: 100;
@@ -162,37 +163,96 @@ main {
   display: none;
 }
 
+.now-track {
+  padding: 0 0 10px;
+}
+
+.now-progress {
+  width: 100%;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  outline: none;
+  overflow: hidden;
+}
+
+.now-progress::-webkit-progress-bar {
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+}
+
+.now-progress::-webkit-progress-value {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.now-progress::-moz-progress-bar {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
 .now-info {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
+  gap: 10px;
 }
 
 .now-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-dim);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-right: 12px;
+  max-width: 100%;
+  text-align: center;
 }
 
 .now-controls {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 24px;
 }
 
-.now-controls button {
+.ctrl-btn {
   background: none;
   border: none;
-  color: var(--text);
-  font-size: 1.2rem;
   cursor: pointer;
-  padding: 4px;
   border-radius: 50%;
-  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.ctrl-play {
+  width: 56px;
+  height: 56px;
+  font-size: 1.4rem;
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 4px 14px rgba(233,69,96,0.35);
+}
+
+.ctrl-play:active {
+  transform: scale(0.92);
+  box-shadow: 0 2px 8px rgba(233,69,96,0.25);
+}
+
+.ctrl-stop {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.06);
+}
+
+.ctrl-stop:active {
+  background: rgba(255,255,255,0.1);
+  transform: scale(0.92);
 }
 
 .now-controls button:hover {
