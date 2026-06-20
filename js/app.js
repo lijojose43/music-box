@@ -32,10 +32,14 @@ function getColor(i) {
 function renderTiles() {
   grid.innerHTML = '';
   if (tiles.length === 0) {
+    grid.style.display = 'flex';
+    grid.style.flex = '1';
     grid.appendChild(emptyState);
     emptyState.style.display = 'flex';
     return;
   }
+  grid.style.display = '';
+  grid.style.flex = '';
   emptyState.style.display = 'none';
   tiles.forEach((tile, i) => {
     const div = document.createElement('div');
