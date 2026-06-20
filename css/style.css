@@ -72,9 +72,15 @@ main {
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+  gap: 10px;
   padding-bottom: 16px;
   min-height: 100%;
+}
+
+@media (min-width: 600px) {
+  .tile-grid {
+    gap: 16px;
+  }
 }
 
 .tile {
