@@ -8,6 +8,7 @@ let tiles = [];
 let currentAudio = null;
 let currentTileId = null;
 let dragSrcId = null;
+let loopEnabled = false;
 
 const grid = document.getElementById('tileGrid');
 const emptyState = document.getElementById('emptyState');
@@ -15,6 +16,7 @@ const nowBar = document.getElementById('nowBar');
 const nowLabel = document.getElementById('nowLabel');
 const nowProgress = document.getElementById('nowProgress');
 const playBtn = document.getElementById('playBtn');
+const loopBtn = document.getElementById('loopBtn');
 const stopBtn = document.getElementById('stopBtn');
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsOverlay = document.getElementById('settingsOverlay');
@@ -170,7 +172,12 @@ function playTile(tile) {
   });
 
   audio.addEventListener('ended', () => {
-    stopCurrent();
+    if (loopEnabled) {
+      audio.currentTime = 0;
+      audio.play().catch(() => stopCurrent());
+    } else {
+      stopCurrent();
+    }
   });
 
   audio.addEventListener('error', () => {
@@ -214,7 +221,13 @@ function togglePlay() {
   }
 }
 
+function toggleLoop() {
+  loopEnabled = !loopEnabled;
+  loopBtn.classList.toggle('active', loopEnabled);
+}
+
 playBtn.addEventListener('click', togglePlay);
+loopBtn.addEventListener('click', toggleLoop);
 stopBtn.addEventListener('click', stopCurrent);
 
 settingsBtn.addEventListener('click', () => {

@@ -251,7 +251,8 @@ main {
   box-shadow: 0 2px 8px rgba(233,69,96,0.25);
 }
 
-.ctrl-stop {
+.ctrl-stop,
+.ctrl-loop {
   width: 40px;
   height: 40px;
   font-size: 1rem;
@@ -262,6 +263,15 @@ main {
 .ctrl-stop:active {
   background: rgba(255,255,255,0.1);
   transform: scale(0.92);
+}
+
+.ctrl-loop {
+  font-size: 1.2rem;
+}
+
+.ctrl-loop.active {
+  color: var(--primary);
+  background: rgba(233,69,96,0.15);
 }
 
 .now-controls button:hover {
