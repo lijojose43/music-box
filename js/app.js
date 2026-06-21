@@ -226,6 +226,12 @@ function toggleLoop() {
   loopBtn.classList.toggle('active', loopEnabled);
 }
 
+nowProgress.addEventListener('input', () => {
+  if (currentAudio) {
+    currentAudio.currentTime = parseFloat(nowProgress.value);
+  }
+});
+
 playBtn.addEventListener('click', togglePlay);
 loopBtn.addEventListener('click', toggleLoop);
 stopBtn.addEventListener('click', stopCurrent);
